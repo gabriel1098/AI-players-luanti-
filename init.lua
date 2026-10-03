@@ -6,7 +6,7 @@ local S = minetest.get_translator("ai_players")
 local available_names = {
     "Junior", "Mind", "CrazyZebraABC", "MathPro", "1subaltern", "ChinaUserFromCanada", 
     "TheBestMiner", "ChocolateBee", "OrangeLover", "Luigi", "Mario", "BestPVPuser1",
-    "ChickenNugget4", "Hamburger0192", "Friend", "CorridorOfEverything", "AngryUser1", "LongLegs", "ChickFarm")
+    "ChickenNugget4", "Hamburger0192", "Friend", "CorridorOfEverything", "AngryUser1", "LongLegs", "ChickFarm"
 }
 
 local prohibited_blocks = {
