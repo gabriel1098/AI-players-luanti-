@@ -210,7 +210,7 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
             if lua_enemy and enemy ~= self.object and not enemy:is_player() then
                 if string.find(lua_enemy.name, "mob") or string.find(lua_enemy.name, "monster") or (self.fome < 5) then
                     alvo_combate = enemy
-Use o código com cuidado.
+--Use o código com cuidado.
 break
 end
 end
