@@ -318,7 +318,7 @@ local player = minetest.get_player_by_name(name)
 if not player then return end
 local p_pos = player:get_pos()
 -- 1. Comando: Comida
-if string.find(msg, "comida") then
+if string.find(msg, "comida") or string.find(msg, "food") or string.find(msg, "nourriture") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
 if luaentity and luaentity.name == "ai_players:ai_friend" then
@@ -334,7 +334,7 @@ end
 end
 end
 -- 2. Comando: Farm AFK
-if string.find(msg, "farm afk") then
+if string.find(msg, "farm afk") or string.find(msg, "granja afk") or string.find(msg, "ferme afk") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
 if luaentity and luaentity.name == "ai_players:ai_friend" then
@@ -348,7 +348,7 @@ end
 end
 end
 -- 3. Comando: Ferro
-if string.find(msg, "ferro") then
+if string.find(msg, "ferro") or string.find(msg, "iron") or string.find(msg, "hierro") or string.find(msg, "fer") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
 if luaentity and luaentity.name == "ai_players:ai_friend" then
