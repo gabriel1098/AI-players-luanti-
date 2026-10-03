@@ -72,7 +72,7 @@ minetest.register_craftitem("ai_players:ai_Spawn_Egg", {
         local pos = pointed_thing.above
         pos.y = pos.y + 0.5
         local name_got = available_names[math.random(#available_names)]
-        local ent = minetest.add_entity(pos, "ai_players:ai_player")
+        local ent = minetest.add_entity(pos, "ai_players:ai_friend")
         if ent then
             local lua_ent = ent:get_luaentity()
             lua_ent.bot_name = name_got
@@ -93,7 +93,7 @@ end)
 -- =============================================================================
 -- 🤖 ENTIDADE DO BOT INTELIGENTE EXPANDIDO
 -- =============================================================================
-minetest.register_entity ("ai_players:bot_hardcore"), {
+minetest.register_entity ("ai_players:ai_friend"), {
     initial_properties = {
         hp_max = 100,
         physical = true,
