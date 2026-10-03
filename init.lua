@@ -4,7 +4,7 @@
 
 local S = minetest.get_translator("ai_players")
 local available_names = {
-    S("Junior", "Mind", "CrazyZebraABC", "MathPro", "1subaltern", "ChinaUserFromCanada", 
+    "Junior", "Mind", "CrazyZebraABC", "MathPro", "1subaltern", "ChinaUserFromCanada", 
     "TheBestMiner", "ChocolateBee", "OrangeLover", "Luigi", "Mario", "BestPVPuser1",
     "ChickenNugget4", "Hamburger0192", "Friend", "CorridorOfEverything", "AngryUser1", "LongLegs", "ChickFarm")
 }
