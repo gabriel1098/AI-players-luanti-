@@ -64,7 +64,7 @@ minetest.register_node("ai_players:iron_block_generator", {
 -- =============================================================================
 -- 📦 ITEM DE SPAWN ILIMITADO DO BOT
 -- =============================================================================
-minetest.register_craftitem("ai_players:ai_Spawn_Egg, {
+minetest.register_craftitem("ai_players:ai_Spawn_Egg", {
     description = "AI Spawner (Unlimited)",
     inventory_image = "mcl_tools_diamond_pickaxe.png^[colorize:#FF0000:100",
     on_place = function(itemstack, placer, pointed_thing)
@@ -75,9 +75,9 @@ minetest.register_craftitem("ai_players:ai_Spawn_Egg, {
         local ent = minetest.add_entity(pos, "ai_players:ai_player")
         if ent then
             local lua_ent = ent:get_luaentity()
-            lua_ent.bot_name = nome_sorteado
-            ent:set_properties({nametag = nome_sorteado, nametag_color = "#00FF00"})
-            minetest.chat_send_all("<" .. nome_sorteado .. S("> Hello, i came to help you with your journey!")
+            lua_ent.bot_name = name_got
+            ent:set_properties({nametag = name_got, nametag_color = "#00FF00"})
+            minetest.chat_send_all("<" .. name_got .. S("> Hello, i came to help you with your journey!"))
         end
         return itemstack
     end,
@@ -85,15 +85,15 @@ minetest.register_craftitem("ai_players:ai_Spawn_Egg, {
 
 minetest.register_on_joinplayer(function(player)
     local inv = player:get_inventory()
-    if not inv:contains_item S("main", "ai_players:invocador_bot") then
-        inv:add_item S("main", "ai_players:invocador_bot")
+    if not inv:contains_item S("main", "ai_players:ai_spawner") then
+        inv:add_item S("main", "ai_players:ai_spawner")
     end
 end)
 
 -- =============================================================================
 -- 🤖 ENTIDADE DO BOT INTELIGENTE EXPANDIDO
 -- =============================================================================
-minetest.register_entity S("ai_players:bot_hardcore"), {
+minetest.register_entity ("ai_players:bot_hardcore"), {
     initial_properties = {
         hp_max = 100,
         physical = true,
@@ -107,10 +107,10 @@ minetest.register_entity S("ai_players:bot_hardcore"), {
     bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
-    S(velocidade_andar) = 4.5,
-    S(fome) = 20,
-    S(timer_fome) = 0,
-    S(timer_vila) = 0,
+    velocidade_andar = 4.5,
+    fome = 20,
+    timer_fome = 0,
+    timer_vila = 0,
 
     on_activate = function(self, staticdata, dtime_s)
         if staticdata and staticdata ~= "" then
@@ -321,7 +321,7 @@ local p_pos = player:get_pos()
 if string.find(msg, "comida") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
-if luaentity and luaentity.name == "super_parceiro:bot_hardcore" then
+if luaentity and luaentity.name == "ai_players:bot_hardcore" then
 if luaentity.inv:contains_item("main", "mcl_farming:bread") then
 luaentity.inv:remove_item("main", "mcl_farming:bread 1")
 player:get_inventory():add_item("main", "mcl_farming:bread 1")
