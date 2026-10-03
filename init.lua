@@ -2,13 +2,14 @@
 -- 🤠 MOD HARDCORE SUPREMO - VERSÃO EXPANSÃO (VILAS, SONO E FARMS PORTÁTEIS)
 -- =============================================================================
 
-local nomes_disponiveis = {
-    "Tonhão", "Cleiton", "Ze das Pedras", "Xulambs", "Robinho", "Marreco", 
-    "Mineiro de Elite", "Sombra", "Faísca", "Zica", "Marcinho", "Casca de Bala",
-    "Juninho", "Betão", "Parça", "Corredor", "Zangado", "Perna Longa", "Rambo"
+local S = minetest.get_translator("ai_players")
+local available_names = {
+    S("Junior", "Mind", "CrazyZebraABC", "MathPro", "1subaltern", "ChinaUserFromCanada", 
+    "TheBestMiner", "ChocolateBee", "OrangeLover", "Luigi", "Mario", "BestPVPuser1",
+    "ChickenNugget4", "Hamburger0192", "Friend", "CorridorOfEverything", "AngryUser1", "LongLegs", "ChickFarm")
 }
 
-local blocos_proibidos = {
+local prohibited_blocks = {
     ["mcl_chests:chest"] = true, ["default:chest"] = true,
     ["mcl_furnaces:furnace"] = true, ["default:furnace"] = true,
     ["mcl_beds:bed"] = true, ["default:bed"] = true,
@@ -20,29 +21,29 @@ local blocos_proibidos = {
 -- 🏗️ BLOCOS DE FARM PORTÁTIL AFK (GERADORES AUTOMÁTICOS)
 -- =============================================================================
 
--- 1. Farm AFK de Monstros Simples (Gera itens de mob a cada 10 segundos)
-minetest.register_node("super_parceiro:farm_afk_bloco", {
-    description = "§c[Farm AFK Portátil] Gerador de Mobs",
-    tiles = {"mcl_core_gold_block.png"}, -- Bloco de ouro estilizado
+-- 1. Farm AFK de Monstros Simples (generates monsters items each 10 seconds)
+minetest.register_node("ai_players:afk_monsters_farm", {
+    description = "§c[Portable Afk Farm] Mobs Generator",
+    tiles = {"mcl_core_gold_block.png"}, -- styled gold block
     groups = {pickaxey = 1, cracky = 1},
     on_construct = function(pos)
-        -- Inicia o timer da farm
+        -- Starts the farm timer
         local timer = minetest.get_node_timer(pos)
         timer:start(10)
     end,
     on_timer = function(pos, elapsed)
         local itens_mob = {"mcl_mobitems:rotten_flesh", "mcl_mobitems:bone", "mcl_mobitems:string", "mcl_mobitems:gunpowder"}
         local item_sorteado = itens_mob[math.random(#itens_mob)]
-        -- Dropa o item em cima do bloco
+        -- Drops the item on the block
         minetest.add_item({x=pos.x, y=pos.y+1, z=pos.z}, item_sorteado .. " " .. math.random(1, 2))
-        return true -- Mantém o timer rodando para sempre
+        return true -- keeps the timer looping forever
     end,
 })
 
 -- 2. Farm AFK de Ferro (Gera ferro se houver villagers/camas por perto, simula a regra)
-minetest.register_node("super_parceiro:farm_ferro_bloco", {
-    description = "§7[Farm AFK Portátil] Gerador de Ferro",
-    tiles = {"mcl_core_iron_block.png"}, -- Bloco de ferro
+minetest.register_node("ai_players:iron_block_generator", {
+    description = "§7[Portable Afk Farm] Iron Generator",
+    tiles = {"mcl_core_iron_block.png"}, -- Iron Block
     groups = {pickaxey = 1, cracky = 1},
     on_construct = function(pos)
         local timer = minetest.get_node_timer(pos)
@@ -63,20 +64,20 @@ minetest.register_node("super_parceiro:farm_ferro_bloco", {
 -- =============================================================================
 -- 📦 ITEM DE SPAWN ILIMITADO DO BOT
 -- =============================================================================
-minetest.register_craftitem("super_parceiro:invocador_bot", {
-    description = "Invocador de Parceiro Hardcore (Ilimitado)",
+minetest.register_craftitem("ai_players:ai_Spawn_Egg, {
+    description = "AI Spawner (Unlimited)",
     inventory_image = "mcl_tools_diamond_pickaxe.png^[colorize:#FF0000:100",
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         local pos = pointed_thing.above
         pos.y = pos.y + 0.5
-        local nome_sorteado = nomes_disponiveis[math.random(#nomes_disponiveis)]
-        local ent = minetest.add_entity(pos, "super_parceiro:bot_hardcore")
+        local name_got = available_names[math.random(#available_names)]
+        local ent = minetest.add_entity(pos, "ai_players:ai_player")
         if ent then
             local lua_ent = ent:get_luaentity()
             lua_ent.bot_name = nome_sorteado
             ent:set_properties({nametag = nome_sorteado, nametag_color = "#00FF00"})
-            minetest.chat_send_all("<" .. nome_sorteado .. "> Salve ze! Cheguei pra farmar e dominar o mundo!")
+            minetest.chat_send_all("<" .. nome_sorteado .. S("> Hello, i came to help you with your journey!")
         end
         return itemstack
     end,
@@ -84,17 +85,17 @@ minetest.register_craftitem("super_parceiro:invocador_bot", {
 
 minetest.register_on_joinplayer(function(player)
     local inv = player:get_inventory()
-    if not inv:contains_item("main", "super_parceiro:invocador_bot") then
-        inv:add_item("main", "super_parceiro:invocador_bot")
+    if not inv:contains_item S("main", "ai_players:invocador_bot") then
+        inv:add_item S("main", "ai_players:invocador_bot")
     end
 end)
 
 -- =============================================================================
 -- 🤖 ENTIDADE DO BOT INTELIGENTE EXPANDIDO
 -- =============================================================================
-minetest.register_entity("super_parceiro:bot_hardcore", {
+minetest.register_entity S("ai_players:bot_hardcore"), {
     initial_properties = {
-        hp_max = 20,
+        hp_max = 100,
         physical = true,
         collisionbox = {-0.3, -1.0, -0.3, 0.3, 0.8, 0.3},
         visual = "mesh",
@@ -103,13 +104,13 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
         makes_footstep_sound = true,
     },
 
-    bot_name = "Parceiro",
+    bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
-    velocidade_andar = 4.5,
-    fome = 20,
-    timer_fome = 0,
-    timer_vila = 0,
+    S(velocidade_andar) = 4.5,
+    S(fome) = 20,
+    S(timer_fome) = 0,
+    S(timer_vila) = 0,
 
     on_activate = function(self, staticdata, dtime_s)
         if staticdata and staticdata ~= "" then
@@ -140,11 +141,11 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
     on_rightclick = function(self, clicker)
         if clicker and clicker:is_player() then
             local formspec = "size[8,9]" ..
-                "label[0,0;Inventario de " .. self.bot_name .. "]" ..
+                "label[0,0;Inventory from " .. self.bot_name .. "]" ..
                 "list[detached:" .. self.inv_id .. ";main;0,0.5;4,4;]" ..
-                "label[0,4.8;Seu Inventario]" ..
+                "label[0,4.8;Your Inventory]" ..
                 "list[current_player;main;0,5.3;8,4;]"
-            minetest.show_formspec(clicker:get_player_name(), "super_parceiro:menu_bot", formspec)
+            minetest.show_formspec(clicker:get_player_name(), "ai_players:bot_menu", formspec)
         end
     end,
 
@@ -158,16 +159,16 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
         -- =====================================================================
         -- 🌙 SISTEMA DE NOITE (DORMIR / FOGUEIRA)
         -- =====================================================================
-        local hora = minetest.get_timeofday()
-        if hora < 0.2 or hora > 0.8 then -- Está de noite
-            -- Procura se o jogador colocou uma cama por perto
-            local cama = minetest.find_node_near(pos, 5, {"group:bed", "mcl_beds:bed"})
-            if cama and math.random(1, 100) == 5 then
+        local hour = minetest.get_timeofday()
+        if hour < 0.2 or hour > 0.8 then -- Night
+            -- Searches for bed near player
+            local bed = minetest.find_node_near(pos, 5, {"group:bed", "mcl_beds:bed"})
+            if bed and math.random(1, 100) == 5 then
                 self.object:set_velocity({x=0, y=0, z=0})
                 if math.random(1, 50) == 1 then
-                    minetest.chat_send_all("<" .. self.bot_name .. "> Vixe, escureceu ze. Vou deitar aqui perto pra resetar a noite.")
+                    minetest.chat_send_all("<" .. self.bot_name .. S("> Oh no, it's night, i'll sleep to reset the day."))
                 end
-                return -- Pausa as outras ações para simular o sono
+                return -- Stops everything to simulate sleeping
             end
         end
 
@@ -180,7 +181,7 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
             -- Procura blocos típicos de vilas (como plantações ou caminhos de terra)
             local na_vila = minetest.find_node_near(pos, 10, {"mcl_core:farmland", "mcl_farming:wheat"})
             if na_vila then
-                minetest.chat_send_all("<" .. self.bot_name .. "> Caraca, uma vila! Vou dar uma limpada nos baús e plantações deles, ze!")
+                minetest.chat_send_all("<" .. self.bot_name .. S("> Holy Cow, a village! i will loot it rn and get the farms, bro!"))
                 -- Simula o saque adicionando itens aleatórios de vila no baú dele
                 local loots_vila = {"mcl_core:apple", "mcl_farming:wheat", "mcl_core:emerald", "mcl_core:potato"}
                 self.inv:add_item("main", loots_vila[math.random(#loots_vila)] .. " " .. math.random(1, 3))
@@ -197,7 +198,7 @@ minetest.register_entity("super_parceiro:bot_hardcore", {
             if self.fome <= 0 then
                 self.fome = 0
                 self.object:set_hp(self.object:get_hp() - 1)
-                minetest.chat_send_all("<" .. self.bot_name .. "> Ze, tô morrendo de fome! Me dá comida ou vou sumir do Hardcore!")
+                minetest.chat_send_all("<" .. self.bot_name .. S("> Bro, im hungry, give me food or i will be defeated by hunger!"))
             end
         end
 
@@ -324,9 +325,9 @@ if luaentity and luaentity.name == "super_parceiro:bot_hardcore" then
 if luaentity.inv:contains_item("main", "mcl_farming:bread") then
 luaentity.inv:remove_item("main", "mcl_farming:bread 1")
 player:get_inventory():add_item("main", "mcl_farming:bread 1")
-minetest.chat_send_all(" Toma aí, ze! Dividindo o pão pro Hardcore!")
+minetest.chat_send_all S(" Take it, bro, Sharing is always great!")
 else
-minetest.chat_send_all(" Tô sem rango aqui, ze!")
+minetest.chat_send_all S(" i don't have food!")
 end
 break
 end
@@ -336,12 +337,12 @@ end
 if string.find(msg, "farm afk") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
-if luaentity and luaentity.name == "super_parceiro:bot_hardcore" then
+if luaentity and luaentity.name == "ai_players:ai_friend" then
 -- O bot coloca o bloco especial de farm 2 blocos à frente dele
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
-minetest.set_node(spawn_farm, {name="super_parceiro:farm_afk_bloco"})
-minetest.chat_send_all(" Pronto, ze! Coloquei a Farm AFK Portátil de Monstros no chão!")
+minetest.set_node(spawn_farm, {name="ai_players:farm_afk_bloco"})
+minetest.chat_send_all S(" alr bro, i just placed the afm farm!")
 break
 end
 end
@@ -350,11 +351,11 @@ end
 if string.find(msg, "ferro") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
-if luaentity and luaentity.name == "super_parceiro:bot_hardcore" then
+if luaentity and luaentity.name == "ai_players:ai_friend" then
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
-minetest.set_node(spawn_farm, {name="super_parceiro:farm_ferro_bloco"})
-minetest.chat_send_all(" Deixa o ferro render! Farm Portátil de Ferro ativada, só deixa os villagers perto!")
+minetest.set_node(spawn_farm, {name="ai_players:farm_ferro_bloco"})
+minetest.chat_send_all S(" Let the iron Farm Farm Iron, ik that is strange but i hope you understood!")
 break
 end
 end
