@@ -85,15 +85,15 @@ minetest.register_craftitem("ai_players:ai_Spawn_Egg", {
 
 minetest.register_on_joinplayer(function(player)
     local inv = player:get_inventory()
-    if not inv:contains_item S("main", "ai_players:ai_spawner") then
-        inv:add_item S("main", "ai_players:ai_spawner")
+    if not inv:contains_item ("main", "ai_players:ai_Spawn_Egg") then
+        inv:add_item ("main", "ai_players:ai_Spawn_Egg")
     end
 end)
 
 -- =============================================================================
 -- 🤖 ENTIDADE DO BOT INTELIGENTE EXPANDIDO
 -- =============================================================================
-minetest.register_entity ("ai_players:ai_friend"), {
+minetest.register_entity ("ai_players:ai_friend", {
     initial_properties = {
         hp_max = 100,
         physical = true,
@@ -291,7 +291,7 @@ local bloco_pos = apontado.under
 local node_name = minetest.get_node(bloco_pos).name
 local def = minetest.registered_nodes[node_name]
 local eh_queravel = def and (def.groups.cracky or def.groups.crumbly or def.groups.choppy)
-if eh_queravel and not blocos_proibidos[node_name] then
+if eh_queravel and not prohibited_blocks[node_name] then
 if bloco_pos.y < (pos.y - 0.2) and node_name ~= "air" then
 if math.random(1, 100) < 12 then
 local drops = minetest.get_node_drops(node_name, "")
@@ -321,13 +321,13 @@ local p_pos = player:get_pos()
 if string.find(msg, "comida") then
 for _, obj in pairs(minetest.get_objects_inside_radius(p_pos, 15)) do
 local luaentity = obj:get_luaentity()
-if luaentity and luaentity.name == "ai_players:bot_hardcore" then
+if luaentity and luaentity.name == "ai_players:ai_friend" then
 if luaentity.inv:contains_item("main", "mcl_farming:bread") then
 luaentity.inv:remove_item("main", "mcl_farming:bread 1")
 player:get_inventory():add_item("main", "mcl_farming:bread 1")
-minetest.chat_send_all S(" Take it, bro, Sharing is always great!")
+minetest.chat_send_all( S(" Take it, bro, Sharing is always great!"))
 else
-minetest.chat_send_all S(" i don't have food!")
+minetest.chat_send_all( S(" i don't have food!"))
 end
 break
 end
@@ -342,7 +342,7 @@ if luaentity and luaentity.name == "ai_players:ai_friend" then
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
 minetest.set_node(spawn_farm, {name="ai_players:farm_afk_bloco"})
-minetest.chat_send_all S(" alr bro, i just placed the afm farm!")
+minetest.chat_send_all( S(" alr bro, i just placed the afm farm!"))
 break
 end
 end
@@ -355,7 +355,7 @@ if luaentity and luaentity.name == "ai_players:ai_friend" then
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
 minetest.set_node(spawn_farm, {name="ai_players:farm_ferro_bloco"})
-minetest.chat_send_all S(" Let the iron Farm Farm Iron, ik that is strange but i hope you understood!")
+minetest.chat_send_all( S(" Let the iron Farm Farm Iron, ik that is strange but i hope you understood!"))
 break
 end
 end
