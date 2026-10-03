@@ -342,7 +342,7 @@ if luaentity and luaentity.name == "ai_players:ai_friend" then
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
 minetest.set_node(spawn_farm, {name="ai_players:afk_monsters_farm"})
-minetest.chat_send_all( S(" alr bro, i just placed the afm farm!"))
+minetest.chat_send_all( S(" alr bro, i just placed the afk farm!"))
 break
 end
 end
