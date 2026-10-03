@@ -85,8 +85,8 @@ minetest.register_craftitem("ai_players:ai_spawn_egg", {
 
 minetest.register_on_joinplayer(function(player)
     local inv = player:get_inventory()
-    if not inv:contains_item ("main", "ai_players:ai_Spawn_Egg") then
-        inv:add_item ("main", "ai_players:ai_Spawn_Egg")
+    if not inv:contains_item ("main", "ai_players:ai_spawn_egg") then
+        inv:add_item ("main", "ai_players:ai_spawn_egg")
     end
 end)
 
