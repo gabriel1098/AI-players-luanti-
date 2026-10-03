@@ -64,9 +64,9 @@ minetest.register_node("ai_players:iron_block_generator", {
 -- =============================================================================
 -- 📦 ITEM DE SPAWN ILIMITADO DO BOT
 -- =============================================================================
-minetest.register_craftitem("ai_players:ai_Spawn_Egg", {
+minetest.register_craftitem("ai_players:ai_spawn_egg", {
     description = "AI Spawner (Unlimited)",
-    inventory_image = "mcl_tools_diamond_pickaxe.png^[colorize:#FF0000:100",
+    inventory_image = "mcl_tools_diamond_pickaxe.png^[colorize:#ff0000:100",
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         local pos = pointed_thing.above
@@ -76,7 +76,7 @@ minetest.register_craftitem("ai_players:ai_Spawn_Egg", {
         if ent then
             local lua_ent = ent:get_luaentity()
             lua_ent.bot_name = name_got
-            ent:set_properties({nametag = name_got, nametag_color = "#00FF00"})
+            ent:set_properties({nametag = name_got, nametag_color = "#00ff00"})
             minetest.chat_send_all("<" .. name_got .. S("> Hello, i came to help you with your journey!"))
         end
         return itemstack
@@ -341,7 +341,7 @@ if luaentity and luaentity.name == "ai_players:ai_friend" then
 -- O bot coloca o bloco especial de farm 2 blocos à frente dele
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
-minetest.set_node(spawn_farm, {name="ai_players:farm_afk_bloco"})
+minetest.set_node(spawn_farm, {name="ai_players:afk_monsters_farm"})
 minetest.chat_send_all( S(" alr bro, i just placed the afm farm!"))
 break
 end
@@ -354,7 +354,7 @@ local luaentity = obj:get_luaentity()
 if luaentity and luaentity.name == "ai_players:ai_friend" then
 local b_pos = obj:get_pos()
 local spawn_farm = {x=math.floor(b_pos.x)+2, y=math.floor(b_pos.y), z=math.floor(b_pos.z)}
-minetest.set_node(spawn_farm, {name="ai_players:farm_ferro_bloco"})
+minetest.set_node(spawn_farm, {name="ai_players:iron_block_generator"})
 minetest.chat_send_all( S(" Let the iron Farm Farm Iron, ik that is strange but i hope you understood!"))
 break
 end
