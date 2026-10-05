@@ -93,16 +93,14 @@ end)
 -- =============================================================================
 -- 🤖 ENTIDADE DO BOT INTELIGENTE EXPANDIDO
 -- =============================================================================
-minetest.register_entity ("ai_players:ai_friend", {
+minetest.register_entity("ai_players:ai_friend", {
         hp_max = 100,
         physical = true,
         collisionbox = {-0.3, -1.0, -0.3, 0.3, 0.8, 0.3},
         visual = "mesh",
-        mesh = "character.b3d",
+        mesh = "multiplayer_cube.obj",
         textures = {"character.png"},
         makes_footstep_sound = true,
-    },
-
     bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
