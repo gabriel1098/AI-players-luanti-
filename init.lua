@@ -98,11 +98,19 @@ minetest.register_entity("ai_players:ai_friend", {
         hp_max = 100,
         physical = true,
         collisionbox = {-0.3, -1.0, -0.3, 0.3, 0.8, 0.3},
-        visual = "mesh",
-        mesh = "multiplayer_cube.obj",
-        textures = {"character.png"},
+        
+        visual = "cube",
+        textures = {
+            "character.png",
+            "character.png",
+            "character.png",
+            "character.png",
+            "character.png",
+            "character.png"
+        },
         makes_footstep_sound = true,
     },
+
     bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
