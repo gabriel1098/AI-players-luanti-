@@ -98,19 +98,21 @@ minetest.register_entity("ai_players:ai_friend", {
         hp_max = 100,
         physical = true,
         collisionbox = {-0.3, -1.0, -0.3, 0.3, 0.8, 0.3},
-        
-        visual = "cube",
-        textures = {
-            "character.png",
-            "character.png",
-            "character.png",
-            "character.png",
-            "character.png",
-            "character.png"
-        },
+        visual = "mesh",
+        mesh = "character.b3d",
+        textures = {"character.png"},
         makes_footstep_sound = true,
     },
 
+    on_activate = function(self, staticdata, dtime_s)
+        -- Injeta automaticamente o modelo humano e as animações do Mineclonia
+        if minetest.global_exists("player_api") then
+            local anim_mesh = player_api.get_animation_mesh("model")
+            if anim_mesh then
+                self.object:set_properties({mesh = anim_mesh})
+            end
+        end
+    
     bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
