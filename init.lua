@@ -104,15 +104,6 @@ minetest.register_entity("ai_players:ai_friend", {
         makes_footstep_sound = true,
     },
 
-    on_activate = function(self, staticdata, dtime_s)
-        -- Injeta automaticamente o modelo humano e as animações do Mineclonia
-        if minetest.global_exists("player_api") then
-            local anim_mesh = player_api.get_animation_mesh("model")
-            if anim_mesh then
-                self.object:set_properties({mesh = anim_mesh})
-            end
-        end
-    
     bot_name = "Friend",
     tool_durability = 100,
     has_tool = true,
@@ -122,17 +113,13 @@ minetest.register_entity("ai_players:ai_friend", {
     timer_vila = 0,
 
     on_activate = function(self, staticdata, dtime_s)
-        if staticdata and staticdata ~= "" then
-            local data = minetest.deserialize(staticdata)
-            if data then
-                self.bot_name = data.name or self.bot_name
-                self.fome = data.fome or self.fome
-                self.tool_durability = data.tool_durability or self.tool_durability
-                self.object:set_hp(data.hp or 20)
-                self.object:set_properties({nametag = self.bot_name, nametag_color = "#00FF00"})
+        if minetest.global_exists("player_api") then
+            local anim_mesh = player_api.get_animation_mesh("model")
+            if anim_mesh then
+                self.object:set_properties({mesh = anim_mesh})
             end
         end
-        
+
         local inv_id = "bot_inv_" .. tostring(self.object:get_pos().x) .. "_" .. tostring(self.object:get_pos().z)
         self.inv_id = inv_id
         self.inv = minetest.create_detached_inventory(inv_id, {
